@@ -35,7 +35,7 @@ In this section, we’ll set up the environment in Azure that will be used throu
 3. **Create Linux VM**  
    - Create a new **Linux (Ubuntu) VM**.  
    - Name it: `linux-vm`.  
-   - Use the **same Resource Group** and **same VNet** as `windows-vm`.  
+   - Use the **same Resource Group** and **same VNet** and **subnet** as `windows-vm`.  
    - Match similar sizing requirements (≥ 2 vCPUs, 8 GiB).  
    - 📸 *[Screenshot Placeholder]*  
 
