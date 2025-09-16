@@ -194,7 +194,7 @@ In this section, we’ll initiate an SSH connection from the `windows-vm` to the
    - Go to the Azure Portal and confirm the **private IP address** of `linux-vm` (in this example: `172.16.0.5`).  
 
    <p align="center">
-     <img src="https://i.imgur.com/WDtv66H.png" alt="Linux VM Private IP" width="600"/>
+     <img src="https://i.imgur.com/WDtv66H.png" alt="Linux VM Private IP" width="900"/>
    </p>  
 
 ---
