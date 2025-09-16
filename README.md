@@ -1,4 +1,4 @@
-# Azure-Compute-and-Networking
+# Azure Compute and Networking
 
 
 
@@ -181,3 +181,86 @@ In this section, we saw how creating an NSG rule in Azure blocked ICMP traffic b
 - **Understanding packet behavior** and being able to confirm changes using tools like PowerShell and Wireshark.  
 
 👉 In practice, IT professionals regularly configure firewalls/NSGs, monitor traffic, and verify the effects of those changes to ensure both **security** and **functionality** of systems.
+
+---
+
+## 🔹 Part 4: Observing SSH Traffic  
+
+In this section, we’ll initiate an SSH connection from the `windows-vm` to the `linux-vm` and capture the traffic in Wireshark.  
+
+### 🛠️ Steps  
+
+1. **Retrieve Linux VM Private IP**  
+   - Go to the Azure Portal and confirm the **private IP address** of `linux-vm` (in this example: `172.16.0.5`).  
+
+   <p align="center">
+     <img src="https://i.imgur.com/WDtv66H.png" alt="Linux VM Private IP" width="600"/>
+   </p>  
+
+---
+
+2. **SSH into Linux VM from Windows VM**  
+   - On the `windows-vm`, open **PowerShell**.  
+   - Enter the following command:  
+     ```powershell
+     ssh labuser@<private-ip>
+     ```  
+   - When prompted with a security/host authenticity question, type **yes**.  
+   - Enter the password you set for the Linux VM.  
+   - You should now be logged into the Linux VM via SSH.  
+
+   <p align="center">
+     <img src="https://i.imgur.com/BufwuYs.png" alt="SSH into Linux VM" width="600"/>
+   </p>  
+
+---
+
+3. **Filter SSH in Wireshark**  
+   - On the `windows-vm`, go back to Wireshark.  
+   - Apply a filter for:  
+     ```
+     ssh
+     ```  
+     or  
+     ```
+     tcp.port == 22
+     ```  
+   - You’ll see packets exchanged between the Windows and Linux VMs.  
+   - The communication is encrypted, so you cannot read the actual contents.  
+
+   <p align="center">
+     <img src="https://i.imgur.com/PbGSPTA.png" alt="Observing SSH Traffic in Wireshark" width="600"/>
+   </p>  
+
+---
+
+4. **Run Commands in the SSH Session**  
+   - Once logged into the `linux-vm`, type commands such as:  
+     ```bash
+     hostname
+     id
+     uname -a
+     ```  
+   - In PowerShell, you’ll see the Linux system’s responses (hostname, user info, OS details).  
+
+   <p align="center">
+     <img src="https://i.imgur.com/VUZlbGs.png" alt="Testing Commands in SSH Session" width="600"/>
+   </p>  
+
+   - Back in Wireshark, you’ll notice:  
+     - Packets are actively exchanged whenever you type.  
+     - **Every keystroke and command generates SSH packets.**  
+     - The **contents are encrypted** — Wireshark shows the packets, but not the actual commands or outputs.  
+
+---
+
+### 📘 Key Insight  
+
+- SSH protects sensitive data by encrypting both the commands sent and the responses received.  
+- Even though Wireshark shows packet activity, the payloads cannot be read.  
+- This is different from ICMP:  
+  - **ICMP:** You can see Echo Requests/Replies and their contents.  
+  - **SSH:** You only see encrypted packets, not the actual command text.  
+- For IT specialists, this highlights why SSH is the standard for remote access, replacing insecure options like Telnet (which would expose everything in plain text).  
+
+---
